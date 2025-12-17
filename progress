@@ -1,0 +1,254 @@
+[index.html](https://github.com/user-attachments/files/24210600/index.html)
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>每日進度填寫｜拾葉設計</title>
+<style>
+:root{
+  --bg:#0b0f14;
+  --card:#101826;
+  --stroke:rgba(255,255,255,.14);
+  --stroke2:rgba(255,255,255,.22);
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.70);
+  --muted2:rgba(255,255,255,.55);
+  --accent:rgba(255,255,255,.92);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial;
+  background: #000;
+  color: var(--text);
+}
+.bg{
+  position:fixed; inset:0; z-index:-2;
+  background:#000;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.wrap{min-height:100%; padding:54px 22px;}
+.container{max-width:1100px;margin:0 auto;}
+.hd{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:16px;
+}
+.brand h1{margin:0;font-weight:250;font-size:52px;letter-spacing:.06em;text-transform:uppercase}
+.brand p{margin:10px 0 0 0;font-size:12px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2)}
+.menu{
+  width:40px;height:28px;display:flex;flex-direction:column;gap:6px;justify-content:center;opacity:.9
+}
+.menu span{height:2px;background:rgba(255,255,255,.85);border-radius:2px}
+.card{
+  margin-top:26px;
+  background: rgba(16,24,38,.55);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.label{font-size:12px;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.input, select, textarea{
+  width:100%;
+  border-radius: 12px;
+  border: 1px solid var(--stroke2);
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  padding: 10px 12px;
+  outline: none;
+}
+textarea{min-height:96px;resize:vertical}
+.btnRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px}
+button.btn{
+  border-radius: 12px;
+  border: 1px solid var(--stroke2);
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  padding: 10px 14px;
+  cursor:pointer;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+button.btn:hover{border-color: rgba(255,255,255,.55)}
+a.link{
+  color:#fff; text-decoration:none; opacity:.75;
+  letter-spacing:.14em; text-transform:uppercase; font-size:12px;
+}
+a.link:hover{opacity:1}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th,.table td{border-bottom:1px solid rgba(255,255,255,.12);padding:10px 8px;vertical-align:top}
+.table th{font-size:12px;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;font-weight:500;text-align:left}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(0,0,0,.18);font-size:12px;color:var(--muted)}
+.small{font-size:12px;color:var(--muted2);line-height:1.7}
+.status{font-size:12px;color:var(--muted)}
+hr.sep{border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
+
+.card{max-width:980px;margin:20px auto 0 auto}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:860px){.row{grid-template-columns:1fr}}
+.items{margin-top:12px}
+.itemRow{display:grid;grid-template-columns:2fr 2fr 1fr 44px;gap:10px;align-items:center;margin:10px 0}
+@media (max-width:860px){.itemRow{grid-template-columns:1fr;}}
+.iconX{width:44px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.18);color:#fff;cursor:pointer}
+.iconX:hover{border-color:rgba(255,255,255,.55)}
+</style></head><body>
+<div class="bg" id="bg"></div>
+<div class="wrap"><div class="container">
+  <div class="hd">
+    <div class="brand">
+      <h1 style="margin:0;font-weight:250;font-size:44px;letter-spacing:.06em;text-transform:uppercase">每日進度填寫</h1>
+      <p style="margin:10px 0 0 0;font-size:12px;letter-spacing:.20em;text-transform:uppercase;color:rgba(255,255,255,.55)">請選日期，並填寫今日做的案子（最多 6 筆）</p>
+    </div>
+    <div class="menu" aria-hidden="true"><span></span><span></span></div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <div class="label">同事姓名</div>
+        <select id="staff"></select>
+      </div>
+      <div>
+        <div class="label">日期</div>
+        <input id="date" class="input" type="date">
+      </div>
+    </div>
+
+    <div class="items" id="items"></div>
+
+    <div class="btnRow">
+      <button class="btn" id="add">+ 新增一筆</button>
+      <span class="pill" id="countPill">0 / 6</span>
+    </div>
+
+    <hr class="sep">
+
+    <div>
+      <div class="label">備註（選填）</div>
+      <textarea id="note"></textarea>
+    </div>
+
+    <div class="btnRow">
+      <button class="btn" id="submit">傳送</button>
+      <span class="status" id="status"></span>
+      <span style="flex:1"></span>
+      <a class="link" href="./admin.html">後台（管理員）</a>
+    </div>
+
+    <div class="small" style="margin-top:10px">
+      送出後資料會進入：年度工時 / 今日全員進度 / 專案年度總表（由報表頁自動整合）。
+    </div>
+  </div>
+</div></div>
+
+<script>
+const CFG_URL='./config.json';
+let CFG=null;
+let MAX=6;
+
+function opt(html){const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstChild;}
+function fillSelect(sel, arr, allowEmpty){
+  sel.innerHTML='';
+  if(allowEmpty){const o=document.createElement('option'); o.value=''; o.textContent='—'; sel.appendChild(o);}
+  (arr||[]).forEach(v=>{const o=document.createElement('option'); o.value=v; o.textContent=v; sel.appendChild(o);});
+}
+function setCount(){
+  const n=document.querySelectorAll('.itemRow').length;
+  countPill.textContent = n + ' / ' + MAX;
+  add.disabled = n>=MAX;
+}
+function makeRow(){
+  const row=opt(`<div class="itemRow">
+    <div>
+      <div class="label">案子</div>
+      <select class="proj"></select>
+    </div>
+    <div>
+      <div class="label">工作內容</div>
+      <select class="work"></select>
+    </div>
+    <div>
+      <div class="label">時數</div>
+      <select class="hrs"></select>
+    </div>
+    <div style="display:flex;align-items:end;justify-content:center;padding-top:22px">
+      <button class="iconX" title="刪除">×</button>
+    </div>
+  </div>`);
+  fillSelect(row.querySelector('.proj'), CFG.options.projects, true);
+  fillSelect(row.querySelector('.work'), CFG.options.workTypes, true);
+  fillSelect(row.querySelector('.hrs'), CFG.options.hours, true);
+  row.querySelector('.iconX').onclick=()=>{row.remove(); setCount();}
+  return row;
+}
+function gather(){
+  const rows=[...document.querySelectorAll('.itemRow')];
+  const items=[];
+  for(const r of rows){
+    const project=r.querySelector('.proj').value.trim();
+    const workType=r.querySelector('.work').value.trim();
+    const hours=r.querySelector('.hrs').value.trim();
+    if(!project && !workType && !hours) continue;
+    items.push({project, workType, hours});
+  }
+  return items;
+}
+function validate(payload){
+  if(!payload.staff) return '請選擇同事姓名';
+  if(!payload.date) return '請選擇日期';
+  if(payload.items.length===0) return '請至少填 1 筆案子';
+  for(let i=0;i<payload.items.length;i++){
+    const it=payload.items[i];
+    if(!it.project || !it.workType || !it.hours) return '第 ' + (i+1) + ' 筆請填完整（案子/工作內容/時數）';
+  }
+  return '';
+}
+async function post(payload){
+  const url=CFG.submit?.endpointUrl;
+  if(!url) throw new Error('尚未設定提交端點（請到後台貼上 Apps Script /exec 網址）');
+  const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const txt=await res.text();
+  try{const j=JSON.parse(txt); if(j.ok===false) throw new Error(j.error||'提交失敗'); return j;}
+  catch(e){if(!res.ok) throw new Error('提交失敗'); return {ok:true};}
+}
+
+(async()=>{
+  const r=await fetch(CFG_URL+'?v='+Date.now(),{cache:'no-store'});
+  CFG=await r.json();
+  MAX=Number(CFG.maxItems||6);
+
+  fillSelect(staff, CFG.options.staff, false);
+
+  const d=new Date();
+  const iso=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  date.value=iso;
+
+  // start with 1 row
+  items.appendChild(makeRow());
+  setCount();
+})();
+
+add.onclick=()=>{ if(document.querySelectorAll('.itemRow').length>=MAX) return; items.appendChild(makeRow()); setCount(); };
+
+submit.onclick=async()=>{
+  status.textContent='送出中…';
+  try{
+    const payload={staff:staff.value.trim(), date:date.value, note:note.value.trim(), items:gather(), submittedAt:new Date().toISOString()};
+    const err=validate(payload); if(err) throw new Error(err);
+    await post(payload);
+    status.textContent='✅ 已送出';
+    // reset
+    items.innerHTML='';
+    items.appendChild(makeRow());
+    setCount();
+    note.value='';
+  }catch(e){
+    status.textContent='❌ ' + (e.message||'送出失敗');
+  }
+};
+</script>
+</body></html>
