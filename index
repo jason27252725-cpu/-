@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>拾葉設計｜內部入口</title>
+<style>
+
+:root{
+  --bg:#0b0f14;
+  --card:#101826;
+  --stroke:rgba(255,255,255,.14);
+  --stroke2:rgba(255,255,255,.22);
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.70);
+  --muted2:rgba(255,255,255,.55);
+  --accent:rgba(255,255,255,.92);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", Arial;
+  background: #000;
+  color: var(--text);
+}
+.bg{
+  position:fixed; inset:0; z-index:-2;
+  background:#000;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.wrap{min-height:100%; padding:54px 22px;}
+.container{max-width:1100px;margin:0 auto;}
+.hd{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:16px;
+}
+.brand h1{margin:0;font-weight:250;font-size:52px;letter-spacing:.06em;text-transform:uppercase}
+.brand p{margin:10px 0 0 0;font-size:12px;letter-spacing:.20em;text-transform:uppercase;color:var(--muted2)}
+.menu{
+  width:40px;height:28px;display:flex;flex-direction:column;gap:6px;justify-content:center;opacity:.9
+}
+.menu span{height:2px;background:rgba(255,255,255,.85);border-radius:2px}
+.card{
+  margin-top:26px;
+  background: rgba(16,24,38,.55);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.label{font-size:12px;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px}
+.input, select, textarea{
+  width:100%;
+  border-radius: 12px;
+  border: 1px solid var(--stroke2);
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  padding: 10px 12px;
+  outline: none;
+}
+textarea{min-height:96px;resize:vertical}
+.btnRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px}
+button.btn{
+  border-radius: 12px;
+  border: 1px solid var(--stroke2);
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  padding: 10px 14px;
+  cursor:pointer;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-size:12px;
+}
+button.btn:hover{border-color: rgba(255,255,255,.55)}
+a.link{
+  color:#fff; text-decoration:none; opacity:.75;
+  letter-spacing:.14em; text-transform:uppercase; font-size:12px;
+}
+a.link:hover{opacity:1}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th,.table td{border-bottom:1px solid rgba(255,255,255,.12);padding:10px 8px;vertical-align:top}
+.table th{font-size:12px;color:var(--muted2);letter-spacing:.14em;text-transform:uppercase;font-weight:500;text-align:left}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(0,0,0,.18);font-size:12px;color:var(--muted)}
+.small{font-size:12px;color:var(--muted2);line-height:1.7}
+.status{font-size:12px;color:var(--muted)}
+hr.sep{border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0}
+
+.nav{margin-top:40px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+a.navLink{color:#fff;text-decoration:none;font-size:13px;letter-spacing:.18em;text-transform:uppercase;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0);transition:border-color .12s ease,opacity .12s ease}
+a.navLink:hover{border-bottom-color:rgba(255,255,255,.80)}
+a.navLink.disabled{opacity:.35;pointer-events:none}
+/* SOP AI floating */
+.fab{position:fixed;right:18px;bottom:18px;width:52px;height:52px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.35);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+.fab:hover{border-color:rgba(255,255,255,.60)}
+.fabDot{width:9px;height:9px;border-radius:999px;background:#fff;box-shadow:0 0 0 10px rgba(255,255,255,.12)}
+.chat{position:fixed;right:18px;bottom:82px;width:min(420px,calc(100vw - 36px));height:min(560px,calc(100vh - 120px));border-radius:14px;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.35);backdrop-filter:blur(12px);overflow:hidden;display:none}
+.chat.show{display:block}
+.chatHeader{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid rgba(255,255,255,.18);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.80)}
+.iconBtn{border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.35);color:rgba(255,255,255,.85);border-radius:10px;padding:6px 10px;cursor:pointer;font-size:12px}
+.iconBtn:hover{border-color:rgba(255,255,255,.55)}
+.chatBody{height:calc(100% - 44px);background:#fff}
+.chatBody iframe{width:100%;height:100%;border:0}
+</style></head>
+<body>
+<div class="bg" id="bg"></div>
+<div class="wrap"><div class="container">
+  <div class="hd">
+    <div class="brand">
+      <h1 id="brandMain">拾葉設計</h1>
+      <p id="brandSub">內部 SOP 與專案整合系統</p>
+      <p id="tagline" class="small" style="margin-top:14px;letter-spacing:.20em;text-transform:uppercase;">SOP 查詢｜進度填寫｜工時統計</p>
+    </div>
+    <div class="menu" aria-hidden="true"><span></span><span></span></div>
+  </div>
+
+  <nav class="nav" style="margin-top:46px">
+    <a class="navLink" id="lnkProgress" target="_blank" rel="noreferrer">每日進度填寫</a>
+    <a class="navLink" id="lnkSopDrive" target="_blank" rel="noreferrer">SOP 文件資料夾</a>
+    <a class="navLink" id="lnkMyYear" target="_blank" rel="noreferrer">我的年度工時</a>
+    <a class="navLink" id="lnkToday" target="_blank" rel="noreferrer">今日全員進度</a>
+    <a class="navLink" id="lnkProjectYear" target="_blank" rel="noreferrer">專案年度總表</a>
+  </nav>
+</div></div>
+
+<div class="chat" id="chat">
+  <div class="chatHeader">
+    <div>SOP AI</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="iconBtn" id="popoutBtn">另開</button>
+      <button class="iconBtn" id="closeBtn">關閉</button>
+    </div>
+  </div>
+  <div class="chatBody"><iframe id="chatFrame" src="about:blank" loading="lazy"></iframe></div>
+</div>
+<div class="fab" id="fab" title="開啟 SOP AI"><div class="fabDot"></div></div>
+
+<script>
+const CONFIG_URL='./config.json';
+function setLink(el,url){
+  if(url && String(url).trim()){ el.href=String(url).trim(); el.classList.remove('disabled'); }
+  else { el.href='#'; el.classList.add('disabled'); }
+}
+function openChat(url){
+  if(!url||!String(url).trim()){ alert('尚未設定 SOP AI 連結（請到後台更新 config.json）。'); return; }
+  chatFrame.src=String(url).trim();
+  chat.classList.add('show');
+}
+(async()=>{
+  let cfg=null;
+  try{ const r=await fetch(CONFIG_URL+'?v='+Date.now(),{cache:'no-store'}); if(r.ok) cfg=await r.json(); }catch(e){}
+  if(!cfg) return;
+  brandMain.textContent=cfg.brandMain||'拾葉設計';
+  brandSub.textContent=cfg.brandSub||'';
+  tagline.textContent=cfg.tagline||'';
+
+  if(cfg.backgroundImageUrl && String(cfg.backgroundImageUrl).trim()) {
+    bg.style.backgroundImage="url('"+String(cfg.backgroundImageUrl).replace(/'/g,"\\'")+"')";
+  }
+
+  setLink(lnkProgress, cfg.links?.progressSiteUrl);
+  setLink(lnkSopDrive, cfg.links?.sopDriveUrl);
+  setLink(lnkMyYear, cfg.links?.myYearUrl);
+  setLink(lnkToday, cfg.links?.todayUrl);
+  setLink(lnkProjectYear, cfg.links?.projectYearUrl);
+
+  const aiUrl=cfg.ai?.iframeOrShareUrl||'';
+  fab.addEventListener('click',()=>openChat(aiUrl));
+  closeBtn.addEventListener('click',()=>chat.classList.remove('show'));
+  popoutBtn.addEventListener('click',()=>{ if(aiUrl) window.open(aiUrl,'_blank','noreferrer'); });
+})();
+</script>
+</body></html>
